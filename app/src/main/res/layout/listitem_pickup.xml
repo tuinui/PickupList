@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        app:cardCornerRadius="1dp"
+        app:cardElevation="4dp"
+        app:contentPadding="16dp"
+        tools:context=".pickuplist.PickupListFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textview_listitem_pickup_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                tools:text="Pathum Wan" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="2dp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textview_listitem_pickup_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                tools:text="CENTRAL WORLD" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="2dp" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textview_listitem_pickup_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                tools:text="Store" />
+
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+</FrameLayout>

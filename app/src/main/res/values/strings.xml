@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PickupList</string>
+    <string name="sorry_something_went_wrong">Sorry, something went wrong.</string>
+    <string name="pomelo_pickup">POMELO PICKUP</string>
+</resources>

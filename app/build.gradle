@@ -1,0 +1,93 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+android {
+
+    Properties properties = new Properties()
+
+    properties.load(project.rootProject.file('pickup.properties').newDataInputStream())
+
+    compileSdk 31
+
+    buildFeatures {
+        viewBinding = true
+    }
+
+    defaultConfig {
+        applicationId "com.saran.akkaraviwat.pickuplist"
+        minSdk 21
+        targetSdk 31
+        versionCode 1
+        versionName "1.0.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildTypes.each {
+        it.buildConfigField 'String', 'API_KEY',   "\"${properties.getProperty('api.key')}\""
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+
+    // location
+    implementation "com.google.android.gms:play-services-location:18.0.0"
+
+    // retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    implementation "com.google.code.gson:gson:2.8.7"
+
+    // kotlinx
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0"
+
+    // DI
+    // Koin core features
+    implementation "io.insert-koin:koin-core:3.1.2"
+    // Koin main features for Android (Scope,ViewModel ...)
+    implementation "io.insert-koin:koin-android:3.1.2"
+    // Koin test features
+    testImplementation "io.insert-koin:koin-test:3.1.2"
+    // Koin for JUnit 5
+    testImplementation "io.insert-koin:koin-test-junit5:3.1.2"
+
+    // Permissions handling
+    implementation 'com.github.quickpermissions:quickpermissions-kotlin:0.4.0'
+
+
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
