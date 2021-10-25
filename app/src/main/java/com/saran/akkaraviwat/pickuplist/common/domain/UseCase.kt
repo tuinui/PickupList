@@ -1,5 +1,6 @@
 package com.saran.akkaraviwat.pickuplist.common.domain
 
+import androidx.annotation.VisibleForTesting
 import com.saran.akkaraviwat.pickuplist.common.CoroutineDispatcherProvider
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
@@ -13,6 +14,10 @@ abstract class UseCase<in P, R>() : KoinComponent {
     @Throws(Exception::class)
     protected abstract suspend fun execute(params: P): R
 
+    @VisibleForTesting
+    suspend fun forceExecute(params: P): R {
+        return execute(params)
+    }
 
     open suspend fun invoke(
         params: P

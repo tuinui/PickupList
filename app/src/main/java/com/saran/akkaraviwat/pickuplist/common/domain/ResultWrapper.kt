@@ -4,7 +4,7 @@ sealed class ResultWrapper<out T> {
 
     data class Success<out T>(val data: T) : ResultWrapper<T>()
 
-    data class Failure(val errorModel: Exception) : ResultWrapper<Nothing>()
+    data class Failure(val exception: Exception?) : ResultWrapper<Nothing>()
 
 }
 

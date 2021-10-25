@@ -7,8 +7,6 @@ data class PickupListResponse(
     val pickupList: List<Pickup>
 ) {
     data class Pickup(
-        @SerializedName("id_country")
-        val countryId: Long?,
         @SerializedName("alias")
         val alias: String?,
         @SerializedName("address1")
@@ -21,5 +19,18 @@ data class PickupListResponse(
         val latitude: Double?,
         @SerializedName("longitude")
         val longitude: Double?
-    )
+    ) {
+        companion object {
+            val FAKE_DATA = Pickup(
+                alias = "alias",
+                latitude = 13.76427,
+                longitude = 100.539345,
+                active = true,
+                city = "city",
+                address1 = "address1"
+            )
+        }
+    }
+
+
 }

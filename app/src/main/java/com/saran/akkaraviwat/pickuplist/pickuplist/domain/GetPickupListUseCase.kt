@@ -13,7 +13,27 @@ class GetPickupListUseCase(
 ) : UseCase<Unit, List<PickupDomainModel>>() {
 
     override suspend fun execute(params: Unit): List<PickupDomainModel> {
-        val pickupListResponse = pickupRepository.getPickupLocations().pickupList
+        val pickupListResponse =
+            pickupRepository.getPickupLocations().pickupList.filter { it.active == true }
+        val sortedPickupLocationResponse: List<PickupListResponse.Pickup> =
+            sortByPickupLocation(pickupListResponse)
+
+        return mapToDomainModel(sortedPickupLocationResponse)
+    }
+
+    private fun mapToDomainModel(sortedPickupLocationResponse: List<PickupListResponse.Pickup>) =
+        sortedPickupLocationResponse
+            .map {
+                PickupDomainModel(
+                    alias = it.alias,
+                    address = it.address1,
+                    city = it.city
+                )
+            }
+
+    private suspend fun sortByPickupLocation(
+        pickupListResponse: List<PickupListResponse.Pickup>
+    ): List<PickupListResponse.Pickup> {
         val currentDeviceLocation = deviceLocationRepository.getLastLocation()
 
         val sortedPickupLocationResponse: List<PickupListResponse.Pickup> =
@@ -31,16 +51,6 @@ class GetPickupListUseCase(
             } else {
                 pickupListResponse
             }
-
         return sortedPickupLocationResponse
-            .map {
-                PickupDomainModel(
-                    alias = it.alias,
-                    address = it.address1,
-                    city = it.city
-                )
-            }
     }
-
-
 }

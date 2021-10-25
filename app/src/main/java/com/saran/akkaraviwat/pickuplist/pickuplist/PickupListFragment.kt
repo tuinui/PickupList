@@ -6,14 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.livinglifetechway.quickpermissions_kotlin.runWithPermissions
 import com.saran.akkaraviwat.pickuplist.R
-import com.saran.akkaraviwat.pickuplist.common.presentation.HorizontalSpaceItemDecoration
 import com.saran.akkaraviwat.pickuplist.common.presentation.SingleEventObserver
-import com.saran.akkaraviwat.pickuplist.common.presentation.VerticalSpaceItemDecoration
 import com.saran.akkaraviwat.pickuplist.databinding.FragmentPickupListBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -25,10 +22,11 @@ class PickupListFragment : Fragment() {
 
     private lateinit var binding: FragmentPickupListBinding
     private val viewModel: PickupListViewModel by viewModel()
-    private val pickupListRecyclerAdapter = PickupListRecyclerAdapter()
+    private val pickupListRecyclerAdapter: PickupListRecyclerAdapter by lazy { PickupListRecyclerAdapter() }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPickupListBinding.inflate(inflater, container, false)
@@ -41,14 +39,16 @@ class PickupListFragment : Fragment() {
         initViewModel()
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.loadPickupList()
+    }
 
     private fun initView() {
         binding.recyclerviewPickupList.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = pickupListRecyclerAdapter
         }
-
-
 
         binding.swiperefreshlayoutPickupList.setOnRefreshListener {
             viewModel.loadPickupList()

@@ -6,6 +6,7 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Looper
 import com.google.android.gms.location.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -19,7 +20,6 @@ class DeviceLocationRepository(
         LocationServices.getFusedLocationProviderClient(context)
     }
 
-
     private val fallbackLocationClient: LocationManager by lazy {
         context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     }
@@ -31,7 +31,6 @@ class DeviceLocationRepository(
     private val locationRequestInterval = 10L
     private val locationRequestFastestInterval = 1L
     private val locationRequestMaxWaitTime = 10000L
-    private val locationRequestNumUpdates = 1
     private val locationRequestPriority = LocationRequest.PRIORITY_HIGH_ACCURACY
 
 
@@ -78,7 +77,7 @@ class DeviceLocationRepository(
         request.fastestInterval = locationRequestFastestInterval
         request.maxWaitTime = locationRequestMaxWaitTime
         request.priority = locationRequestPriority
-        request.numUpdates = locationRequestNumUpdates
+        request.numUpdates = 1
 
 
         return suspendCoroutine { cont ->

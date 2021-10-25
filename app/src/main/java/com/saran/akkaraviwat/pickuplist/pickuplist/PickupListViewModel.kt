@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.saran.akkaraviwat.pickuplist.R
-import com.saran.akkaraviwat.pickuplist.common.cancelIfActive
 import com.saran.akkaraviwat.pickuplist.common.domain.isSuccessNonNull
 import com.saran.akkaraviwat.pickuplist.common.domain.success
 import com.saran.akkaraviwat.pickuplist.common.presentation.BaseViewModel
@@ -22,9 +21,9 @@ class PickupListViewModel(
     val pickupList: LiveData<List<PickupItemUiModel>> = _pickupList.toLiveData()
 
     fun loadPickupList() = viewModelScope.launch {
-        val showLoading = showLoadingDebounceJob()
+        showLoading()
         val result = getPickupListUseCase.invoke(Unit)
-        showLoading.cancelIfActive()
+        dismissLoading()
         if (result.isSuccessNonNull) {
             val pickupListUiModel = result.success()
                 .filter { it.alias?.isNotBlank() == true }
